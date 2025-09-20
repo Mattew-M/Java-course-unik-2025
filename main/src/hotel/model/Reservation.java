@@ -1,7 +1,6 @@
 package hotel.model;
 
 import hotel.util.Utils;
-
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 

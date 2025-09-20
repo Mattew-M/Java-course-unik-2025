@@ -5,7 +5,7 @@ import hotel.util.Utils;
 public record Guest(String firstName, String lastName, String email) {
     public Guest {
         if (!Utils.validateEmail(email)) {
-            throw new IllegalArgumentException("Invalid email");
+            throw new IllegalArgumentException("Invalid email: " + email);
         }
     }
 

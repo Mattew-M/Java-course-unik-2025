@@ -1,48 +1,58 @@
 package hotel;
 
+import hotel.loader.GuestLoader;
+import hotel.loader.RoomLoader;
+import hotel.loader.ServiceLoader;
 import hotel.model.*;
+import hotel.util.Logger;
 
-import java.time.LocalDate;
-import java.util.Arrays;
+import java.io.IOException;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        try {
-            // Використання enum + record
-            Room room1 = new Room(101, RoomType.DELUXE, 2, Room.basePrice(RoomType.DELUXE));
-            Room room2 = Room.createStandardRoom(102);
+        List<Guest> guests = null;
+        List<Room> rooms = null;
+        List<Service> services = null;
 
-            Guest guest = new Guest("Vlad", "Doe", "vlad.doe@example.com");
+        try {
+            guests = GuestLoader.loadFromFile("main/resources/guests.csv");
+            rooms = RoomLoader.loadFromFile("main/resources/rooms.csv");
+            services = ServiceLoader.loadFromFile("main/resources/services.csv");
+
+            Logger.info("All valid guests from CSV:");
+            guests.forEach(g -> System.out.println("  " + g));
+
+            Logger.info("All valid rooms from CSV:");
+            rooms.forEach(r -> System.out.println("  " + r));
+
+            Logger.info("All valid services from CSV:");
+            services.forEach(s -> System.out.println("  " + s));
+
+            Guest guest = guests.get(0);
+            Room room = rooms.get(0);
+            Service service1 = services.get(0);
+            Service service2 = services.get(1);
 
             Reservation res = new Reservation(
                     guest,
-                    room1,
-                    LocalDate.of(2025, 9, 20),
-                    LocalDate.of(2025, 9, 25)
+                    room,
+                    java.time.LocalDate.of(2025, 9, 20),
+                    java.time.LocalDate.of(2025, 9, 25)
             );
 
-            Service breakfast = new Service(ServiceType.BREAKFAST);
-            Service spa = new Service(ServiceType.SPA);
+            Invoice invoice = new Invoice(res, List.of(service1, service2));
 
-            Invoice invoice = new Invoice(res, Arrays.asList(breakfast, spa));
-
-            System.out.println(room1);
-            System.out.println(guest);
+            System.out.println("\nDemo reservation and invoice:");
             System.out.println(res);
             System.out.println(invoice);
 
-
-            RoomType type = RoomType.DELUXE;
-            System.out.println("Base price for " + type + " = " + type.basePrice());
-
-            ServiceType service = ServiceType.SPA;
-            System.out.println("Price for " + service + " = " + service.price());
-
-
-            // Перевірка валідації
-            Guest badGuest = new Guest("Bad", "User", "wrongEmail");
+        } catch (IOException e) {
+            Logger.error("File operation error: " + e.getMessage());
         } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
+            Logger.error("Unexpected error: " + e.getMessage());
+        } finally {
+            Logger.info("Program finished.");
         }
     }
 }

@@ -1,15 +1,12 @@
 package hotel.model;
 
 import hotel.util.Utils;
-
 import java.time.LocalDate;
 import java.util.List;
 
 public record Invoice(Reservation reservation, List<Service> services, double totalAmount, LocalDate issueDate) {
     public Invoice(Reservation reservation, List<Service> services) {
-        this(reservation, services,
-                calculateTotal(reservation, services),
-                LocalDate.now());
+        this(reservation, services, calculateTotal(reservation, services), LocalDate.now());
     }
 
     private static double calculateTotal(Reservation reservation, List<Service> services) {
