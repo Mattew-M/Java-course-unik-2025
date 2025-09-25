@@ -16,7 +16,6 @@ class GuestRepositoryTest {
         Guest g = new Guest("Test", "User", "test@example.com");
         repo.add(g);
 
-        // Перевірка, що гість доданий і його можна знайти
         assertTrue(repo.findByIdentity("test@example.com").isPresent());
         assertEquals(g, repo.findByIdentity("test@example.com").get());
     }
@@ -27,7 +26,6 @@ class GuestRepositoryTest {
         Guest g = new Guest("Test", "User", "test@example.com");
         repo.add(g);
 
-        // Перевірка видалення
         assertTrue(repo.remove(g));
         assertFalse(repo.findByIdentity("test@example.com").isPresent());
     }
@@ -39,7 +37,6 @@ class GuestRepositoryTest {
         repo.add(g);
         repo.add(g); // Дубль
 
-        // Перевірка, що обидва об’єкти присутні у списку
         assertEquals(2, repo.getAll().size());
     }
 }
