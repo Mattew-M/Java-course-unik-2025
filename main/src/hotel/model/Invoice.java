@@ -3,8 +3,11 @@ package hotel.model;
 import hotel.util.Utils;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Comparator;
 
-public record Invoice(Reservation reservation, List<Service> services, double totalAmount, LocalDate issueDate) {
+public record Invoice(Reservation reservation, List<Service> services, double totalAmount, LocalDate issueDate)
+        implements Comparable<Invoice> {
+
     public Invoice(Reservation reservation, List<Service> services) {
         this(reservation, services, calculateTotal(reservation, services), LocalDate.now());
     }
@@ -25,4 +28,14 @@ public record Invoice(Reservation reservation, List<Service> services, double to
                 totalAmount,
                 Utils.formatDate(issueDate));
     }
+
+    // Comparable за датою виписки
+    @Override
+    public int compareTo(Invoice other) {
+        return this.issueDate.compareTo(other.issueDate);
+    }
+
+    // Додаткові Comparator-и
+    public static final Comparator<Invoice> BY_TOTAL_AMOUNT = Comparator.comparingDouble(Invoice::totalAmount);
+    public static final Comparator<Invoice> BY_GUEST_LASTNAME = Comparator.comparing(inv -> inv.reservation().guest().lastName());
 }

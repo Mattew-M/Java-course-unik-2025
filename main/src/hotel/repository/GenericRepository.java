@@ -33,4 +33,18 @@ public class GenericRepository<T> {
                 .filter(item -> extractor.getId(item).equals(id))
                 .findFirst();
     }
+    public void sortByIdentity(String order) {
+        boolean ascending = "asc".equalsIgnoreCase(order);
+        items.sort((a, b) -> {
+            Comparable ca = (Comparable) a;
+            Comparable cb = (Comparable) b;
+            return ascending ? ca.compareTo(cb) : cb.compareTo(ca);
+        });
+        Logger.info("Sorted by identity in " + (ascending ? "ascending" : "descending") + " order");
+    }
+
+    public void sortByComparator(java.util.Comparator<T> comparator, boolean ascending) {
+        items.sort(ascending ? comparator : comparator.reversed());
+        Logger.info("Sorted by comparator: " + comparator + ", ascending=" + ascending);
+    }
 }
