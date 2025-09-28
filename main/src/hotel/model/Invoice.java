@@ -29,13 +29,11 @@ public record Invoice(Reservation reservation, List<Service> services, double to
                 Utils.formatDate(issueDate));
     }
 
-    // Comparable за датою виписки
     @Override
     public int compareTo(Invoice other) {
         return this.issueDate.compareTo(other.issueDate);
     }
 
-    // Додаткові Comparator-и
     public static final Comparator<Invoice> BY_TOTAL_AMOUNT = Comparator.comparingDouble(Invoice::totalAmount);
     public static final Comparator<Invoice> BY_GUEST_LASTNAME = Comparator.comparing(inv -> inv.reservation().guest().lastName());
 }

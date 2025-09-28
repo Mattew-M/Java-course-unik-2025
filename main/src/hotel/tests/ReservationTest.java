@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReservationTest {
-
     @Test
     void testValidReservationAndNights() {
         Guest guest = new Guest("Anna", "Smith", "anna.smith@example.com");

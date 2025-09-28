@@ -10,7 +10,6 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        // === Створення об'єктів Guest ===
         Guest g1 = new Guest("Anna", "Smith", "anna@example.com");
         Guest g2 = new Guest("Bob", "Brown", "bob@example.com");
         Guest g3 = new Guest("Vlad", "Doe", "vlad@example.com");

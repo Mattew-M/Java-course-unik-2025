@@ -18,7 +18,6 @@ public record Reservation(Guest guest, Room room, LocalDate startDate, LocalDate
         return ChronoUnit.DAYS.between(startDate, endDate);
     }
 
-    // Comparable за датою початку
     @Override
     public int compareTo(Reservation other) {
         return this.startDate.compareTo(other.startDate);
