@@ -32,5 +32,4 @@ public class InvoiceRepository extends GenericRepository<Invoice> {
                 .filter(inv -> inv.reservation().guest().lastName().equalsIgnoreCase(lastName))
                 .toList();
     }
-
 }

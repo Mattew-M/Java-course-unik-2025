@@ -33,5 +33,4 @@ public class RoomRepository extends GenericRepository<Room> {
                 .filter(r -> r.price() >= min && r.price() <= max)
                 .toList();
     }
-
 }

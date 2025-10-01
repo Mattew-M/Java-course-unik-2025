@@ -36,5 +36,4 @@ public class ReservationRepository extends GenericRepository<Reservation> {
                 .filter(r -> r.room().roomNumber() == roomNumber)
                 .count();
     }
-
 }

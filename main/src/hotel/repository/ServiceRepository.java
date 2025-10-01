@@ -21,5 +21,4 @@ public class ServiceRepository extends GenericRepository<Service> {
                 .filter(s -> s.price() > price)
                 .toList();
     }
-
 }
