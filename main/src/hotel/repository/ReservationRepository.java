@@ -1,6 +1,9 @@
 package hotel.repository;
 
 import hotel.model.Reservation;
+import hotel.util.Logger;
+
+import java.util.List;
 
 public class ReservationRepository extends GenericRepository<Reservation> {
 
@@ -19,4 +22,19 @@ public class ReservationRepository extends GenericRepository<Reservation> {
     public void sortByGuestLastName(boolean ascending) {
         sortByComparator(Reservation.BY_GUEST_LASTNAME, ascending);
     }
+
+    public List<Reservation> findByGuestEmail(String email) {
+        Logger.info("Searching reservations by guest email: " + email);
+        return getAll().stream()
+                .filter(r -> r.guest().email().equalsIgnoreCase(email))
+                .toList();
+    }
+
+    public long countReservationsForRoom(int roomNumber) {
+        Logger.info("Counting reservations for room: " + roomNumber);
+        return getAll().stream()
+                .filter(r -> r.room().roomNumber() == roomNumber)
+                .count();
+    }
+
 }
