@@ -93,7 +93,7 @@ public class Main {
 
         System.out.println("\nAll services from all invoices:");
         List<Service> allServices = invRepo.getAll().stream()
-                .flatMap(inv -> inv.services().stream())  // flatMap розгортає List<Service> у потік Service
+                .flatMap(inv -> inv.services().stream())
                 .toList();
         allServices.forEach(System.out::println);
 
